@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 import models, schemas
 
 
-# CREATE
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(name=user.name)
     db.add(db_user)
@@ -19,7 +18,6 @@ def create_post(db: Session, post: schemas.PostCreate):
     return db_post
 
 
-# READ
 def get_users(db: Session):
     return db.query(models.User).all()
 
@@ -28,7 +26,6 @@ def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
 
-# UPDATE
 def update_user(db: Session, user_id: int, name: str):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if user:
@@ -38,7 +35,6 @@ def update_user(db: Session, user_id: int, name: str):
     return user
 
 
-# DELETE
 def delete_user(db: Session, user_id: int):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if user:
@@ -47,7 +43,6 @@ def delete_user(db: Session, user_id: int):
     return user
 
 
-# QUERIES
 def get_posts_by_user(db: Session, user_id: int):
     return db.query(models.Post).filter(models.Post.user_id == user_id).all()
 
