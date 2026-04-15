@@ -18,11 +18,21 @@ def get_db():
         db.close()
 
 
-@app.post("/users/")
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    return crud.create_user(db, user)
+@app.get("/users/")
+def read_users(db: Session = Depends(get_db)):
+    return crud.get_users(db)
 
 
-@app.post("/posts/")
-def create_post(post: schemas.PostCreate, db: Session = Depends(get_db)):
-    return crud.create_post(db, post)
+@app.get("/users/{user_id}")
+def read_user(user_id: int, db: Session = Depends(get_db)):
+    return crud.get_user(db, user_id)
+
+
+@app.put("/users/{user_id}")
+def update_user(user_id: int, name: str, db: Session = Depends(get_db)):
+    return crud.update_user(db, user_id, name)
+
+
+@app.delete("/users/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    return crud.delete_user(db, user_id)
